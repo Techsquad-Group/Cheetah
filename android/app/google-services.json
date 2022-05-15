@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1043142380786",
+    "project_id": "cheetah-364af",
+    "storage_bucket": "cheetah-364af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043142380786:android:89c885bad906697517146b",
+        "android_client_info": {
+          "package_name": "com.example.cheeta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1043142380786-m0vjmomai7a2t4hprqm21ondg79gprfi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cheeta",
+            "certificate_hash": "a0c0a75e22c7b1d16f6b249ecf08f9db254d2990"
+          }
+        },
+        {
+          "client_id": "1043142380786-6k64tiuqb9e7dtpff47mt7r483k75f68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1AKmOT_rOE_6S3Ec_BUinEaTZcRinCzU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1043142380786-6k64tiuqb9e7dtpff47mt7r483k75f68.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
