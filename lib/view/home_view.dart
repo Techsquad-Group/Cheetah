@@ -1,4 +1,5 @@
 import 'package:cheeta/view/auth/login_view.dart';
+import 'package:cheeta/view/widgets/custom_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,71 +57,20 @@ class HomeView extends StatelessWidget {
         mainAxisSpacing: 10,
         crossAxisCount: 2,
         children: <Widget>[
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            color: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: const Text("Electronics", style: TextStyle(fontSize: 25)),
-            ),
+          CustomCard(
+            text: "Electronics",
           ),
-          // child: Container(
-          //   decoration: BoxDecoration(
-          //     image: DecorationImage(
-          //       image: AssetImage('images/kids.png'),
-          //     ),
-          //   ),
-          //   child:Padding(
-          //     padding: EdgeInsets.all(15), //apply padding to all four sides
-          //     child: Text("Electronics", style: TextStyle(fontSize: 25)),
-          //   ),
-          // ),
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            color: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: const Text("Men", style: TextStyle(fontSize: 25)),
-            ),
+          CustomCard(
+            text: "Men",
           ),
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            color: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: const Text("Women", style: TextStyle(fontSize: 25)),
-            ),
+          CustomCard(
+            text: "Women",
           ),
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            color: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: const Text("Kids", style: TextStyle(fontSize: 25)),
-            ),
+          CustomCard(
+            text: "Kids",
           ),
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            color: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.all(8),
-              child: const Text("Mobiles", style: TextStyle(fontSize: 25)),
-            ),
+          CustomCard(
+            text: "Mobiles",
           ),
         ],
       ),
