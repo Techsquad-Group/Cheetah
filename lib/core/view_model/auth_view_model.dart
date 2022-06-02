@@ -1,7 +1,7 @@
 // ignore_for_file: unnecessary_overrides, override_on_non_overriding_member, unused_field, prefer_final_fields, unused_local_variable, avoid_print
 
 import 'package:cheeta/model/user_model.dart';
-import 'package:cheeta/view/home_view.dart';
+import 'package:cheeta/view/home/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
