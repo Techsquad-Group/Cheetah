@@ -1,19 +1,17 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
-import 'package:cheeta/constance.dart';
 import 'package:cheeta/core/view_model/auth_view_model.dart';
-import 'package:cheeta/view/auth/forgot_password_view.dart';
-import 'package:cheeta/view/auth/register_view.dart';
-import 'package:cheeta/view/widgets/custom_buttom.dart';
-import 'package:cheeta/view/widgets/custom_text.dart';
+import 'package:cheeta/view/auth/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../constance.dart';
+import '../widgets/custom_buttom.dart';
 import '../widgets/custom_buttom_social.dart';
+import '../widgets/custom_text.dart';
 import '../widgets/custom_text_form_field.dart';
-import 'register_view.dart';
 
-class LoginView extends GetWidget<AuthViewModel> {
+class ForgotPasswordView extends GetWidget<AuthViewModel> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   AuthViewModel authViewModel = AuthViewModel();
@@ -24,6 +22,11 @@ class LoginView extends GetWidget<AuthViewModel> {
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.white,
+          leading: GestureDetector(
+              onTap: () {
+                Get.off(() => LoginView());
+              },
+              child: Icon(Icons.arrow_back, color: primaryColor)),
         ),
         body: Padding(
           padding: EdgeInsets.only(
@@ -38,14 +41,14 @@ class LoginView extends GetWidget<AuthViewModel> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      text: "Login, ",
+                      text: "Reset Password, ",
                       fontSize: 30,
                       color: primaryColor,
                     )
                   ],
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 30,
                 ),
                 CustomTextFormField(
                   text: "Email",
@@ -63,42 +66,14 @@ class LoginView extends GetWidget<AuthViewModel> {
                 SizedBox(
                   height: 30,
                 ),
-                CustomTextFormField(
-                  text: "Password",
-                  hintText: "********",
-                  onSave: (value) {
-                    controller.password = value!;
-                  },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                GestureDetector(
-                    onTap: () {
-                      Get.to(() => ForgotPasswordView());
-                    },
-                    child: CustomText(
-                      text: "Forgot password?",
-                      fontSize: 12,
-                      alignment: Alignment.topRight,
-                    )),
-                SizedBox(
-                  height: 20,
-                ),
                 CustomButton(
                   onPress: () {
                     _formKey.currentState?.save();
                     if (_formKey.currentState!.validate()) {
-                      controller.signInWithEmailAndPassword();
+                      controller.resetPasswordUsingEmail();
                     }
                   },
-                  text: "LOGIN",
+                  text: "Send Email",
                   color: Colors.white,
                 ),
                 SizedBox(
@@ -106,32 +81,14 @@ class LoginView extends GetWidget<AuthViewModel> {
                 ),
                 GestureDetector(
                     onTap: () {
-                      Get.to(() => RegisterView());
+                      Get.to(() => LoginView());
                     },
                     child: CustomText(
-                      text: "Dont have an account? register here",
+                      text: "Have an account? login here",
                       fontSize: 12,
                       color: Colors.grey.shade800,
                       alignment: Alignment.center,
                     )),
-                SizedBox(
-                  height: 20,
-                ),
-                CustomText(
-                  text: "- OR -",
-                  fontSize: 14,
-                  alignment: Alignment.center,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                CustomButtonSocial(
-                  onPress: () {
-                    controller.googleLoginMethod();
-                  },
-                  text: "Login with Google",
-                  imgName: "assets/images/google.png",
-                ),
               ])),
         ));
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, unused_field
+
 import 'package:cheeta/view/auth/login_view.dart';
 import 'package:cheeta/view/category/men_view.dart';
 import 'package:cheeta/view/widgets/custom_card.dart';
@@ -25,7 +27,9 @@ class HomeView extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.account_circle, color: Colors.black),
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => LoginView());
+              },
             ),
           ],
           //SearchBar
@@ -64,7 +68,7 @@ class HomeView extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Get.to(() => MenView(
+                Get.to(() => MenProductsView(
                       product: [],
                     ));
               },

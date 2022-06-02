@@ -7,10 +7,10 @@ import 'package:cheeta/view/product/add_product_view.dart';
 import 'package:cheeta/core/view_model/product_view_model.dart';
 import 'package:cheeta/model/product_model.dart';
 
-class MenView extends StatelessWidget {
+class MenProductsView extends StatelessWidget {
   final List<ProductModel> product;
 
-  MenView({required this.product});
+  MenProductsView({required this.product});
 
   @override
   Widget build(BuildContext context) {

@@ -24,7 +24,7 @@ dev_dependencies:
   flutter_native_splash: ^2.1.6  
 flutter_native_splash:   
   color: "#FFFFFF"   
-  image: assets/images/cheeta.png   
+  image: assets/images/cheetah.png   
   android: true   
   ios: true   
   android_gravity: center

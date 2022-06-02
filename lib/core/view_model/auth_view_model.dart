@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cheeta/view/auth/login_view.dart';
 
 import '../services/firestore_user.dart';
 
@@ -48,6 +49,7 @@ class AuthViewModel extends GetxController {
 
     await _auth.signInWithCredential(credential).then((user) async {
       saveUser(user);
+      onInt();
       Get.offAll(() => HomeView());
     });
   }
@@ -55,6 +57,7 @@ class AuthViewModel extends GetxController {
   void signInWithEmailAndPassword() async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+      onInt();
       Get.offAll(() => HomeView());
     } catch (e) {
       print(e);
@@ -88,5 +91,29 @@ class AuthViewModel extends GetxController {
       name: user.user?.displayName == null ? name : user.user!.displayName,
       pic: '',
     ));
+  }
+
+  void resetPasswordUsingEmail() async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      Get.offAll(() => LoginView());
+    } catch (e) {
+      print(e);
+
+      Get.snackbar("Invalid email", "",
+          colorText: Colors.black, snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  void signOut() async {
+    try {
+      await _auth.signOut();
+      Get.offAll(() => LoginView());
+    } catch (e) {
+      print(e);
+
+      Get.snackbar("No account detected", e.toString(),
+          colorText: Colors.black, snackPosition: SnackPosition.BOTTOM);
+    }
   }
 }
