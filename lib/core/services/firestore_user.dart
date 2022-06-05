@@ -14,15 +14,9 @@ class FireStoreUser {
         .doc(userModel.userId)
         .set(userModel.toJson());
   }
-}
 
-class FireStoreProduct {
-  final CollectionReference _productCollectionRef =
-      FirebaseFirestore.instance.collection('Products');
-
-  Future<void> addProductToFireStore(ProductModel productModel) async {
-    return await _productCollectionRef
-        .doc(productModel.itemId)
-        .set(productModel.toJson());
+  Future<DocumentSnapshot> getCurrentUser(String uid) async {
+    DocumentSnapshot documentSnapshot = await _userCollectionRef.doc(uid).get();
+    return documentSnapshot;
   }
 }

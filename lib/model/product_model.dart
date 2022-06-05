@@ -1,55 +1,65 @@
+// ignore_for_file: unnecessary_null_comparison
+
 class ProductModel {
-  late String itemId,
-      userId,
-      category,
-      subCategory,
+  String? name,
+      image,
+      price,
       city,
       location,
-      productPic,
-      itemName,
-      description;
-  late double? price;
+      description,
+      date,
+      seller,
+      sellerImg,
+      sellerNum,
+      category,
+      productId;
 
   ProductModel(
-      {required this.itemId,
-      required this.userId,
-      required this.category,
-      required this.subCategory,
-      required this.city,
-      required this.location,
-      required this.productPic,
-      required this.price,
-      required this.itemName,
-      required this.description});
+      {this.name,
+      this.image,
+      this.price,
+      this.city,
+      this.location,
+      this.description,
+      this.date,
+      this.seller,
+      this.sellerImg,
+      this.sellerNum,
+      this.category,
+      this.productId});
 
   ProductModel.fromJson(Map<dynamic, dynamic> map) {
     if (map == null) {
       return;
     }
-    itemId = map['itemId'];
-    userId = map['userId'];
-    category = map['category'];
-    subCategory = map['subCategory'];
+    name = map['name'];
+    image = map['image'];
+    price = map['price'];
     city = map['city'];
     location = map['location'];
-    productPic = map['productPic'];
-    price = map['price'];
-    itemName = map['itemName'];
     description = map['description'];
+    date = map['date'];
+    seller = map['seller'];
+    sellerImg = map['sellerImg'];
+    sellerNum = map['sellerNum'];
+    category = map['category'];
+    productId = map['productId'];
   }
 
   toJson() {
     return {
-      'itemId': itemId,
-      'userId': userId,
-      'category': category,
-      'subCategory': subCategory,
+      'name': name,
+      'image': image,
+      'price': price,
       'city': city,
       'location': location,
-      'productPic': productPic,
-      'price': price,
-      'itemName': itemName,
-      'description': description
+      'description': description,
+      'date': date,
+      'seller': seller,
+      'sellerImg': sellerImg,
+      'sellerNum': sellerNum,
+      'category': category,
+      'productId': productId,
     };
   }
 }
