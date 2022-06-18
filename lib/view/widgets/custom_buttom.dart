@@ -25,8 +25,8 @@ class CustomButton extends StatelessWidget {
           children: <Widget>[
             Positioned.fill(
               child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.black,
+                decoration: BoxDecoration(
+                  color: color,
                 ),
               ),
             ),
@@ -34,7 +34,7 @@ class CustomButton extends StatelessWidget {
                 onPressed: onPress,
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.all(15),
-                  primary: color,
+                  primary: Colors.white,
                 ),
                 child: CustomText(
                   text: text,

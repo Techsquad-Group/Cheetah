@@ -3,14 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CustomRowItem extends StatelessWidget {
-  final String text, image, price, date, category;
+class CustomSearchRowItem extends StatelessWidget {
+  final String text, image, category;
 
-  CustomRowItem({
+  CustomSearchRowItem({
     this.text = "",
     this.image = "",
-    this.price = "",
-    this.date = "",
     this.category = "",
   });
 
@@ -55,11 +53,17 @@ class CustomRowItem extends StatelessWidget {
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: [
+                              SizedBox(
+                                height: 15,
+                              ),
                               CustomText(
                                 text: category,
                                 fontSize: 18,
@@ -74,34 +78,12 @@ class CustomRowItem extends StatelessWidget {
                                 alignment: Alignment.center,
                               ),
                               SizedBox(
-                                height: 10,
-                              ),
-                              CustomText(
-                                text: "Price RM$price",
-                                fontSize: 14,
-                                alignment: Alignment.center,
-                              ),
-                              SizedBox(
                                 height: 40,
                               )
                             ],
                           )
                         ],
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(
-                            height: 70,
-                          ),
-                          CustomText(
-                            text: "$date   ",
-                            fontSize: 14,
-                          ),
-                        ],
-                      )
                     ],
                   )
                 ],

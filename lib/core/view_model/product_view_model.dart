@@ -9,6 +9,9 @@ import '../services/firestore_product.dart';
 class ProductViewModel extends GetxController {
   String currentDate = new DateFormat('yyyy-MM-dd').format(new DateTime.now());
 
+  ProductModel _productModel = new ProductModel();
+  ProductModel get productModel => _productModel;
+
   late String name = "",
       image = "",
       price = "",
@@ -17,13 +20,18 @@ class ProductViewModel extends GetxController {
       description = "",
       date = currentDate,
       seller = "",
+      sellerId = "",
       sellerImg = "",
       sellerNum = "",
       category = "",
       productId = "";
 
+  void onInit() {
+    super.onInit();
+  }
+
   void saveProduct() async {
-    ProductModel productModel = ProductModel(
+    _productModel = ProductModel(
       name: name,
       image: image,
       price: price,
@@ -32,11 +40,13 @@ class ProductViewModel extends GetxController {
       description: description,
       date: date,
       seller: seller,
+      sellerId: sellerId,
       sellerImg: sellerImg,
       sellerNum: sellerNum,
       category: category,
       productId: productId,
     );
     await FireStoreProduct().addProductToFireStore(productModel);
+    update();
   }
 }

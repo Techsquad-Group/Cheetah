@@ -36,7 +36,7 @@ class ForgotPasswordView extends GetWidget<AuthViewModel> {
           ),
           child: Form(
               key: _formKey,
-              child: Column(children: [
+              child: ListView(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -56,12 +56,7 @@ class ForgotPasswordView extends GetWidget<AuthViewModel> {
                   onSave: (value) {
                     controller.email = value!;
                   },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
+                  validator: 'Please enter your email',
                 ),
                 SizedBox(
                   height: 30,

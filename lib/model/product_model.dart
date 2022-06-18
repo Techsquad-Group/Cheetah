@@ -9,6 +9,7 @@ class ProductModel {
       description,
       date,
       seller,
+      sellerId,
       sellerImg,
       sellerNum,
       category,
@@ -23,6 +24,7 @@ class ProductModel {
       this.description,
       this.date,
       this.seller,
+      this.sellerId,
       this.sellerImg,
       this.sellerNum,
       this.category,
@@ -40,6 +42,7 @@ class ProductModel {
     description = map['description'];
     date = map['date'];
     seller = map['seller'];
+    sellerId = map['sellerId'];
     sellerImg = map['sellerImg'];
     sellerNum = map['sellerNum'];
     category = map['category'];
@@ -56,6 +59,7 @@ class ProductModel {
       'description': description,
       'date': date,
       'seller': seller,
+      'sellerId': sellerId,
       'sellerImg': sellerImg,
       'sellerNum': sellerNum,
       'category': category,

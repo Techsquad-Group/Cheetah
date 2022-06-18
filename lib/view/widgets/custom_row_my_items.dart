@@ -1,17 +1,24 @@
+import 'package:cheeta/core/view_model/home_view_model.dart';
+import 'package:cheeta/view/my_items.dart';
 import 'package:cheeta/view/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CustomRowItem extends StatelessWidget {
-  final String text, image, price, date, category;
+import '../../core/view_model/product_view_model.dart';
+import '../control_view.dart';
 
-  CustomRowItem({
+class CustomRowMyItems extends StatelessWidget {
+  final String text, image, price, date, category, productId, sellerId;
+
+  CustomRowMyItems({
     this.text = "",
     this.image = "",
     this.price = "",
     this.date = "",
     this.category = "",
+    this.productId = '',
+    this.sellerId = '',
   });
 
   @override

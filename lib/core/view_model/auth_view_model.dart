@@ -2,7 +2,7 @@
 
 import 'package:cheeta/local_storage_data.dart';
 import 'package:cheeta/model/user_model.dart';
-import 'package:cheeta/view/home/home_view.dart';
+import 'package:cheeta/view/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +28,9 @@ class AuthViewModel extends GetxController {
   void onInt() {
     super.onInit();
     _user.bindStream(_auth.authStateChanges());
+    if (_auth.currentUser != null) {
+      getCurrentUserData(_auth.currentUser!.uid);
+    }
   }
 
   @override
@@ -63,9 +66,7 @@ class AuthViewModel extends GetxController {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
-        await FireStoreUser().getCurrentUser(value.user!.uid).then((value) {
-          setUser(UserModel.fromJson(value.data() as Map<String, dynamic>));
-        });
+        getCurrentUserData(value.user!.uid);
       });
       onInt();
       Get.offAll(() => ControlView());
@@ -85,7 +86,7 @@ class AuthViewModel extends GetxController {
         saveUser(user);
       });
 
-      Get.offAll(() => ControlView());
+      Get.offAll(() => LoginView());
     } catch (e) {
       print(e);
 
@@ -96,13 +97,20 @@ class AuthViewModel extends GetxController {
 
   void saveUser(UserCredential user) async {
     UserModel userModel = UserModel(
-      userId: user.user?.uid,
-      email: user.user?.email,
-      name: user.user?.displayName == null ? name : user.user!.displayName,
-      pic: '',
+      userId: user.user!.uid,
+      email: user.user!.email,
+      name: user.user!.displayName == null ? name : user.user!.displayName,
+      pic: user.user!.photoURL,
+      number: user.user!.phoneNumber,
     );
     await FireStoreUser().addUserToFireStore(userModel);
     setUser(userModel);
+  }
+
+  void getCurrentUserData(String uid) async {
+    await FireStoreUser().getCurrentUser(uid).then((value) {
+      setUser(UserModel.fromJson(value.data() as Map<String, dynamic>));
+    });
   }
 
   void setUser(UserModel userModel) async {

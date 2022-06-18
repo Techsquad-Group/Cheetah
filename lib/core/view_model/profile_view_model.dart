@@ -15,25 +15,30 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../model/user_model.dart';
 import '../../view/add_product_view.dart';
-import '../../view/home/home_view.dart';
+import '../../view/home_view.dart';
 import '../../view/profile_view.dart';
 
 class ProfileViewModel extends GetxController {
-  @override
-  void onInit() {
-    super.onInit();
-    getCurrentUser();
-  }
+  ValueNotifier<bool> _loading = ValueNotifier(false);
+  ValueNotifier<bool> get loading => _loading;
 
   final LocalStorageData localStorageData = Get.find();
 
   UserModel _userModel = new UserModel();
   UserModel get userModel => _userModel;
 
+  @override
+  void onInit() {
+    super.onInit();
+    getCurrentUser();
+  }
+
   void getCurrentUser() async {
+    _loading.value = true;
     await localStorageData.getUser.then((value) {
       _userModel = value!;
     });
+    _loading.value = false;
     update();
   }
 

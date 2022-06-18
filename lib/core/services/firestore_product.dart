@@ -8,8 +8,10 @@ class FireStoreProduct {
       FirebaseFirestore.instance.collection('Products');
 
   Future<void> addProductToFireStore(ProductModel productModel) async {
+    productModel.productId =
+        '${productModel.sellerId}${productModel.category}${productModel.price}${productModel.date}';
     return await _productCollectionRef
-        .doc(productModel.name)
+        .doc(productModel.productId)
         .set(productModel.toJson());
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../view/add_product_view.dart';
-import '../../view/home/home_view.dart';
+import '../../view/home_view.dart';
 import '../../view/profile_view.dart';
 
 class ControlViewModel extends GetxController {

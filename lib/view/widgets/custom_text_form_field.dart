@@ -7,14 +7,14 @@ import 'custom_text.dart';
 class CustomTextFormField extends StatelessWidget {
   final String text;
   final String hintText;
+  final String validator;
   final void Function(String?) onSave;
-  final String? Function(String?) validator;
 
   CustomTextFormField({
     this.text = "",
     this.hintText = "",
+    this.validator = 'Please enter some text',
     required this.onSave,
-    required this.validator,
   });
 
   @override
@@ -29,7 +29,12 @@ class CustomTextFormField extends StatelessWidget {
           ),
           TextFormField(
             onSaved: onSave,
-            validator: validator,
+            validator: (String? _valid) {
+              if (_valid == null || _valid.isEmpty) {
+                return validator;
+              }
+              return null;
+            },
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: TextStyle(

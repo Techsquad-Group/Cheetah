@@ -1,5 +1,5 @@
 class UserModel {
-  late String? userId, email, name, pic, number;
+  String? userId, pic, number, email, name;
 
   UserModel({this.userId, this.email, this.name, this.pic, this.number});
 

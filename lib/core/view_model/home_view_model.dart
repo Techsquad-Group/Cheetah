@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../view/add_product_view.dart';
-import '../../view/home/home_view.dart';
+import '../../view/home_view.dart';
 import '../../view/profile_view.dart';
 
 class HomeViewModel extends GetxController {
@@ -46,6 +46,16 @@ class HomeViewModel extends GetxController {
             ProductModel.fromJson(value[i].data() as Map<dynamic, dynamic>));
         _loading.value = false;
       }
+      update();
+    });
+  }
+
+  deleteProduct(String productId) async {
+    loading.value = true;
+    await HomeServices().deleteProductFromFireStore(productId).then((value) {
+      _productModel.clear();
+      getProduct();
+      _loading.value = false;
       update();
     });
   }

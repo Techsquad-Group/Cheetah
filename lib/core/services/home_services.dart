@@ -16,4 +16,8 @@ class HomeServices {
     var value = await _productCollectionReference.get();
     return value.docs;
   }
+
+  Future<void> deleteProductFromFireStore(String productId) async {
+    await _productCollectionReference.doc(productId).delete();
+  }
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:cheeta/view/control_view.dart';
+import 'package:cheeta/view/my_items.dart';
 import 'package:cheeta/view/widgets/custom_buttom.dart';
 import 'package:cheeta/view/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,13 +11,18 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constance.dart';
+import '../core/view_model/home_view_model.dart';
 import '../core/view_model/product_view_model.dart';
 import '../model/product_model.dart';
 
-class ProductView extends StatelessWidget {
+class MyProductView extends StatelessWidget {
   ProductModel model;
+  String productId;
 
-  ProductView({required this.model});
+  MyProductView({
+    required this.model,
+    required this.productId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +34,22 @@ class ProductView extends StatelessWidget {
     String description = model.description!;
     String date = model.date!;
     String seller = model.seller!;
+    String sellerId = model.sellerId!;
     String sellerImg = model.sellerImg!;
     String sellerNum = model.sellerNum!;
 
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        leading: GestureDetector(
+            onTap: () {
+              Get.off(() => MyItems(
+                    sellerId: sellerId,
+                  ));
+            },
+            child: Icon(Icons.arrow_back, color: primaryColor)),
+      ),
       body: Container(
         child: Column(
           children: [
@@ -67,10 +85,6 @@ class ProductView extends StatelessWidget {
                           CustomText(
                             text: name,
                             fontSize: 25,
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Icon(Icons.favorite),
                           ),
                         ],
                       ),
@@ -171,6 +185,40 @@ class ProductView extends StatelessWidget {
                         height: 5,
                       ),
                       CustomText(text: description, fontSize: 12),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 130,
+                            child: CustomButton(
+                              onPress: () {},
+                              text: "Edit",
+                              color: Colors.green,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 50,
+                          ),
+                          GetBuilder<HomeViewModel>(
+                            builder: (controller) => Container(
+                              width: 150,
+                              child: CustomButton(
+                                onPress: () {
+                                  controller.deleteProduct(productId);
+                                  Get.off(() => MyItems(
+                                        sellerId: sellerId,
+                                      ));
+                                },
+                                text: "Delete",
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

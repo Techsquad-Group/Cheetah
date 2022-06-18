@@ -33,7 +33,7 @@ class LoginView extends GetWidget<AuthViewModel> {
           ),
           child: Form(
               key: _formKey,
-              child: Column(children: [
+              child: ListView(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -53,12 +53,7 @@ class LoginView extends GetWidget<AuthViewModel> {
                   onSave: (value) {
                     controller.email = value!;
                   },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
+                  validator: 'Please enter your email',
                 ),
                 SizedBox(
                   height: 30,
@@ -69,12 +64,7 @@ class LoginView extends GetWidget<AuthViewModel> {
                   onSave: (value) {
                     controller.password = value!;
                   },
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
+                  validator: 'Please enter your password',
                 ),
                 SizedBox(
                   height: 15,
