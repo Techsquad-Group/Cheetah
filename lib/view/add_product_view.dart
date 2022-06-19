@@ -11,6 +11,7 @@ import 'package:cheeta/view/widgets/custom_buttom.dart';
 import 'package:cheeta/view/widgets/custom_row_item.dart';
 import 'package:cheeta/view/widgets/custom_text.dart';
 import 'package:cheeta/view/widgets/custom_text_form_field.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,9 +32,9 @@ class AddProductView extends GetWidget<ProductViewModel> {
 
   void addProduct() {
     controller.saveProduct();
-    Get.to(() => ProductView(
-          model: controller.productModel,
-        ));
+    // Get.to(() => ProductView(
+    //       model: controller.productModel,
+    //     ));
   }
 
   @override
@@ -120,32 +121,43 @@ class AddProductView extends GetWidget<ProductViewModel> {
                 validator: 'Please enter some text',
               ),
               Center(
-                child: GetBuilder<ProfileViewModel>(
-                  init: ProfileViewModel(),
-                  builder: (controller) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 100, left: 100),
-                      child: CustomButton(
-                        onPress: () {
-                          _formKey.currentState?.save();
-                          if (_formKey.currentState!.validate()) {
-                            addUserDateToProduct(
-                              controller.userModel.name!,
-                              controller.userModel.userId!,
-                              controller.userModel.pic == null
-                                  ? ""
-                                  : controller.userModel.pic ?? '',
-                              controller.userModel.number == null
-                                  ? ""
-                                  : controller.userModel.number ?? '',
-                            );
-                            addProduct();
-                          }
-                        },
-                        text: 'Add Product',
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GetBuilder<ProfileViewModel>(
+                        init: ProfileViewModel(),
+                        builder: (controller) => CustomButton(
+                          onPress: () {
+                            _formKey.currentState?.save();
+                            if (_formKey.currentState!.validate()) {
+                              addUserDateToProduct(
+                                controller.userModel.name!,
+                                controller.userModel.userId!,
+                                controller.userModel.pic == null
+                                    ? ""
+                                    : controller.userModel.pic ?? '',
+                                controller.userModel.number == null
+                                    ? ""
+                                    : controller.userModel.number ?? '',
+                              );
+                              addProduct();
+                            }
+                          },
+                          text: 'Add Product',
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      CustomButton(
+                        onPress: () {
+                          controller.selectImage();
+                        },
+                        text: "Chose Product Image",
+                      )
+                    ],
                   ),
                 ),
               ),
