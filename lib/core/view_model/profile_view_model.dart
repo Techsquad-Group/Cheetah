@@ -7,6 +7,7 @@ import 'package:cheeta/local_storage_data.dart';
 import 'package:cheeta/model/category_model.dart';
 import 'package:cheeta/model/product_model.dart';
 import 'package:cheeta/model/user_model.dart';
+import 'package:cheeta/view/control_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
@@ -17,6 +18,7 @@ import '../../model/user_model.dart';
 import '../../view/add_product_view.dart';
 import '../../view/home_view.dart';
 import '../../view/profile_view.dart';
+import '../services/firestore_user.dart';
 
 class ProfileViewModel extends GetxController {
   ValueNotifier<bool> _loading = ValueNotifier(false);
@@ -40,6 +42,27 @@ class ProfileViewModel extends GetxController {
     });
     _loading.value = false;
     update();
+  }
+
+  deleteProfile(String productId) async {
+    loading.value = true;
+    await FireStoreUser().deleteProfileFromFireStore(productId).then((value) {
+      Get.offAll(() => ControlView());
+      _loading.value = false;
+      update();
+    });
+  }
+
+  updateProfile(String userId, String name, String number) async {
+    loading.value = true;
+    await FireStoreUser()
+        .updateProfileFromFireStore(userId, name, number)
+        .then((value) {
+      signOut();
+      Get.offAll(() => ControlView());
+      _loading.value = false;
+      update();
+    });
   }
 
   Future<void> signOut() async {

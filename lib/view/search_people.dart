@@ -5,6 +5,7 @@ import 'package:cheeta/model/category_model.dart';
 import 'package:cheeta/view/add_product_view.dart';
 import 'package:cheeta/view/auth/login_view.dart';
 import 'package:cheeta/view/control_view.dart';
+import 'package:cheeta/view/online_profile_view.dart';
 import 'package:cheeta/view/widgets/custom_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,13 +16,14 @@ import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 import '../constance.dart';
 import '../core/view_model/home_view_model.dart';
+import '../core/view_model/people_view_model.dart';
 import 'category_view.dart';
 import 'product_view.dart';
 import 'widgets/custom_row_item.dart';
 import 'widgets/custom_text.dart';
 import 'widgets/custome_search_row_item.dart';
 
-class HomeView extends StatelessWidget {
+class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _controller = TextEditingController();
@@ -54,7 +56,7 @@ class HomeView extends StatelessWidget {
                               _controller.clear();
                             },
                           ),
-                          hintText: 'Search',
+                          hintText: 'Search for people',
                           border: InputBorder.none,
                         ),
                         onSubmitted: (value) {
@@ -69,42 +71,8 @@ class HomeView extends StatelessWidget {
                   ),
                 ),
                 //Categories
-                body: _listViewCategories()
                 //bottom navigation bar
-                ));
-  }
-
-  Widget _listViewCategories() {
-    return GetBuilder<HomeViewModel>(
-        init: HomeViewModel(),
-        builder: (controller) => SingleChildScrollView(
-              child: StaggeredGridView.countBuilder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: controller.categoryModel.length,
-                  crossAxisCount: 2,
-                  itemBuilder: (context, index) {
-                    CategoryModel model = controller.categoryModel[index];
-
-                    String name = controller.categoryModel[index].name ?? '';
-                    String image = controller.categoryModel[index].image ?? '';
-
-                    return GetBuilder<ControlViewModel>(
-                        init: ControlViewModel(),
-                        builder: (controller) => InkWell(
-                            onTap: () {
-                              controller.goToCategoryPage(CategoryView(
-                                model: model,
-                              ));
-                            },
-                            child: CustomCard(
-                              text: name,
-                              image: image,
-                            )));
-                  },
-                  staggeredTileBuilder: (context) =>
-                      const StaggeredTile.fit(1)),
-            ));
+              ));
   }
 }
 
@@ -134,30 +102,31 @@ class MySearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return GetBuilder<HomeViewModel>(
+    return GetBuilder<PeopleViewModel>(
+      init: PeopleViewModel(),
       builder: (controller) => SingleChildScrollView(
         child: ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: controller.productModel.length,
+          itemCount: controller.userModel.length,
           itemBuilder: (context, index) {
-            if (controller.productModel[index].name!
+            if (controller.userModel[index].name!
                 .toLowerCase()
                 .contains(query.toLowerCase())) {
-              String category = controller.productModel[index].category!;
-              String name = controller.productModel[index].name!;
-              String image = controller.productModel[index].image!;
+              String name = controller.userModel[index].name ?? '';
+              String email = controller.userModel[index].email ?? '';
+              String pic = controller.userModel[index].pic ?? '';
 
               return GestureDetector(
                   onTap: () {
-                    Get.to(() => ProductView(
-                          model: controller.productModel[index],
+                    Get.to(() => OnlineProfileView(
+                          userModel: controller.userModel[index],
                         ));
                   },
                   child: CustomSearchRowItem(
-                    topText: category,
-                    midText: name,
-                    image: image,
+                    topText: name,
+                    midText: email,
+                    image: pic,
                   ));
             }
             return SizedBox.shrink();

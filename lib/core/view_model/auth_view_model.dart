@@ -2,7 +2,6 @@
 
 import 'package:cheeta/local_storage_data.dart';
 import 'package:cheeta/model/user_model.dart';
-import 'package:cheeta/view/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -55,10 +54,27 @@ class AuthViewModel extends GetxController {
     );
 
     await _auth.signInWithCredential(credential).then((user) async {
-      saveUser(user);
+      saveUser(user, 'google');
       onInt();
       Get.offAll(() => ControlView());
     });
+  }
+
+  void registerWithEmailAndPassword() async {
+    try {
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((user) async {
+        saveUser(user, 'normal');
+      });
+
+      Get.offAll(() => LoginView());
+    } catch (e) {
+      print(e);
+
+      Get.snackbar("Invalid email or password", e.toString(),
+          colorText: Colors.black, snackPosition: SnackPosition.BOTTOM);
+    }
   }
 
   void signInWithEmailAndPassword() async {
@@ -78,30 +94,14 @@ class AuthViewModel extends GetxController {
     }
   }
 
-  void registerWithEmailAndPassword() async {
-    try {
-      await _auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((user) async {
-        saveUser(user);
-      });
-
-      Get.offAll(() => LoginView());
-    } catch (e) {
-      print(e);
-
-      Get.snackbar("Invalid email or password", e.toString(),
-          colorText: Colors.black, snackPosition: SnackPosition.BOTTOM);
-    }
-  }
-
-  void saveUser(UserCredential user) async {
+  void saveUser(UserCredential user, String registeredWith) async {
     UserModel userModel = UserModel(
       userId: user.user!.uid,
       email: user.user!.email,
       name: user.user!.displayName == null ? name : user.user!.displayName,
       pic: user.user!.photoURL,
       number: user.user!.phoneNumber,
+      registeredWith: registeredWith,
     );
     await FireStoreUser().addUserToFireStore(userModel);
     setUser(userModel);

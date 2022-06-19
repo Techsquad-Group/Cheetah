@@ -69,7 +69,7 @@ class ForgotPasswordView extends GetWidget<AuthViewModel> {
                     }
                   },
                   text: "Send Email",
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
                 SizedBox(
                   height: 20,

@@ -10,8 +10,10 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constance.dart';
+import '../core/view_model/people_view_model.dart';
 import '../core/view_model/product_view_model.dart';
 import '../model/product_model.dart';
+import 'online_profile_view.dart';
 
 class ProductView extends StatelessWidget {
   ProductModel model;
@@ -20,16 +22,17 @@ class ProductView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String name = model.name!;
-    String image = model.image!;
-    String price = model.price!;
-    String city = model.city!;
-    String location = model.location!;
-    String description = model.description!;
-    String date = model.date!;
-    String seller = model.seller!;
-    String sellerImg = model.sellerImg!;
-    String sellerNum = model.sellerNum!;
+    String name = model.name ?? '';
+    String image = model.image ?? '';
+    String price = model.price ?? '';
+    String city = model.city ?? '';
+    String location = model.location ?? '';
+    String description = model.description ?? '';
+    String date = model.date ?? '';
+    String seller = model.seller ?? '';
+    String sellerId = model.sellerId ?? '';
+    String sellerImg = model.sellerImg ?? '';
+    String sellerNum = model.sellerNum ?? '';
 
     return Scaffold(
       body: Container(
@@ -106,32 +109,43 @@ class ProductView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: sellerImg == ''
-                                        ? AssetImage(
-                                            'assets/images/avatar.png',
-                                          )
-                                        : NetworkImage(
-                                            sellerImg,
-                                          ) as ImageProvider,
-                                    fit: BoxFit.fill,
+                          GetBuilder<PeopleViewModel>(
+                            init: PeopleViewModel(),
+                            builder: (controller) => GestureDetector(
+                              onTap: () {
+                                controller.getSpecificUser(sellerId);
+                                Get.to(() => OnlineProfileView(
+                                      userModel: controller.singleUserModel,
+                                    ));
+                              },
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: sellerImg == ''
+                                            ? AssetImage(
+                                                'assets/images/avatar.png',
+                                              )
+                                            : NetworkImage(
+                                                sellerImg,
+                                              ) as ImageProvider,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  CustomText(
+                                    text: '$seller',
+                                    fontSize: 16,
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              CustomText(
-                                text: '$seller',
-                                fontSize: 16,
-                              ),
-                            ],
+                            ),
                           ),
                           Row(
                             children: [

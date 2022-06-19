@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomSearchRowItem extends StatelessWidget {
-  final String text, image, category;
+  final String topText, image, midText;
 
   CustomSearchRowItem({
-    this.text = "",
+    this.topText = "",
     this.image = "",
-    this.category = "",
+    this.midText = "",
   });
 
   @override
@@ -65,7 +65,7 @@ class CustomSearchRowItem extends StatelessWidget {
                                 height: 15,
                               ),
                               CustomText(
-                                text: category,
+                                text: midText,
                                 fontSize: 18,
                                 alignment: Alignment.center,
                               ),
@@ -73,7 +73,7 @@ class CustomSearchRowItem extends StatelessWidget {
                                 height: 5,
                               ),
                               CustomText(
-                                text: text,
+                                text: topText,
                                 fontSize: 24,
                                 alignment: Alignment.center,
                               ),

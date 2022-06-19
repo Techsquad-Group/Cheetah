@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../view/add_product_view.dart';
 import '../../view/home_view.dart';
 import '../../view/profile_view.dart';
+import '../../view/search_people.dart';
 
 class ControlViewModel extends GetxController {
   int _navigatorValue = 0;
@@ -24,10 +25,15 @@ class ControlViewModel extends GetxController {
         }
       case 1:
         {
-          _currentScreen = AddProductView();
+          _currentScreen = SearchView();
           break;
         }
       case 2:
+        {
+          _currentScreen = AddProductView();
+          break;
+        }
+      case 3:
         {
           _currentScreen = ProfileView();
           break;

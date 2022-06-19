@@ -2,6 +2,7 @@ import 'package:cheeta/local_storage_data.dart';
 import 'package:cheeta/view/profile_view.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 
 import '../../model/product_model.dart';
 import '../services/firestore_product.dart';
@@ -46,7 +47,11 @@ class ProductViewModel extends GetxController {
       category: category,
       productId: productId,
     );
-    await FireStoreProduct().addProductToFireStore(productModel);
+    await FireStoreProduct().addProductToFireStore(productModel).then((value) {
+      value.update({
+        'productId': value.id,
+      });
+    });
     update();
   }
 }

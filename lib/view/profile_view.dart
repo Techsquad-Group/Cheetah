@@ -10,7 +10,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import '../core/view_model/profile_view_model.dart';
-import 'my_items.dart';
+import 'edit_profile_view.dart';
+import 'my_items_view.dart';
 
 class ProfileView extends StatelessWidget {
   @override
@@ -50,9 +51,13 @@ class ProfileView extends StatelessWidget {
                                         : controller.userModel.pic == ''
                                             ? AssetImage(
                                                 'assets/images/avatar.png')
-                                            : NetworkImage(
-                                                controller.userModel.pic ?? '',
-                                              ) as ImageProvider,
+                                            : controller.userModel.pic == null
+                                                ? AssetImage(
+                                                    'assets/images/avatar.png')
+                                                : NetworkImage(
+                                                    controller.userModel.pic ??
+                                                        '',
+                                                  ) as ImageProvider,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -80,7 +85,11 @@ class ProfileView extends StatelessWidget {
                     CustomProfileTiles(
                       text: "Edit Profile",
                       image: 'assets/images/editProfile.png',
-                      onPress: () {},
+                      onPress: () {
+                        Get.to(() => EditProfile(
+                              sellerId: controller.userModel.userId ?? '',
+                            ));
+                      },
                     ),
                     SizedBox(
                       height: 20,

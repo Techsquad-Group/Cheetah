@@ -43,7 +43,7 @@ class CategoryView extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        color: Colors.grey[300],
                         borderRadius: BorderRadius.circular(15)),
                     child: Center(
                       child: TextField(
@@ -78,60 +78,48 @@ class CategoryView extends StatelessWidget {
 
   Widget _listViewProducts() {
     return GetBuilder<HomeViewModel>(
-        builder: (controller) => SingleChildScrollView(
-                child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: controller.productModel.length,
-              itemBuilder: (context, index) {
-                String name = controller.productModel[index].name!;
-                String image = controller.productModel[index].image!;
-                String price = controller.productModel[index].price!;
-                String date = controller.productModel[index].date!;
-                bool isExict = false;
+      builder: (controller) => SingleChildScrollView(
+        child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: controller.productModel.length,
+          itemBuilder: (context, index) {
+            String name = controller.productModel[index].name!;
+            String image = controller.productModel[index].image!;
+            String price = controller.productModel[index].price!;
+            String date = controller.productModel[index].date!;
+            bool isExict = false;
 
-                if (controller.productModel[index].category!.toLowerCase() ==
-                    model.name!.toLowerCase()) {
-                  return GestureDetector(
-                      onTap: () {
-                        Get.to(() => ProductView(
-                              model: controller.productModel[index],
-                            ));
-                      },
-                      child: CustomRowItem(
-                        text: name,
-                        image: image,
-                        price: price,
-                        date: date,
-                      ));
-                }
+            for (var i = 0; i < controller.categoryModel.length; i++) {
+              if (controller.productModel[index].category!.toLowerCase() ==
+                  controller.categoryModel[i].name!.toLowerCase()) {
+                isExict = true;
+                break;
+              }
+            }
 
-                for (var i = 0; i < controller.categoryModel.length; i++) {
-                  if (controller.productModel[index].category!.toLowerCase() ==
-                      controller.categoryModel[i].name!.toLowerCase()) {
-                    isExict = true;
-                    break;
-                  }
-                }
+            if (controller.productModel[index].category!.toLowerCase() ==
+                    model.name!.toLowerCase() ||
+                !isExict && model.name == "Others") {
+              return GestureDetector(
+                  onTap: () {
+                    Get.to(() => ProductView(
+                          model: controller.productModel[index],
+                        ));
+                  },
+                  child: CustomRowItem(
+                    text: name,
+                    image: image,
+                    price: price,
+                    date: date,
+                  ));
+            }
 
-                if (!isExict && model.name == "Others") {
-                  return GestureDetector(
-                      onTap: () {
-                        Get.to(() => ProductView(
-                              model: controller.productModel[index],
-                            ));
-                      },
-                      child: CustomRowItem(
-                        text: name,
-                        image: image,
-                        price: price,
-                        date: date,
-                      ));
-                }
-
-                return SizedBox.shrink();
-              },
-            )));
+            return SizedBox.shrink();
+          },
+        ),
+      ),
+    );
   }
 }
 
@@ -175,25 +163,29 @@ class MySearch extends SearchDelegate {
           shrinkWrap: true,
           itemCount: controller.productModel.length,
           itemBuilder: (context, index) {
-            if (controller.productModel[index].name!
-                    .toLowerCase()
-                    .contains(query.toLowerCase()) &&
-                controller.productModel[index].category == modelName) {
-              String category = controller.productModel[index].category!;
-              String name = controller.productModel[index].name!;
-              String image = controller.productModel[index].image!;
+            if (controller.productModel[index].category == modelName) {
+              if (controller.productModel[index].name!
+                      .toLowerCase()
+                      .contains(query.toLowerCase()) ||
+                  controller.productModel[index].city!
+                      .toLowerCase()
+                      .contains(query.toLowerCase())) {
+                String category = controller.productModel[index].category!;
+                String name = controller.productModel[index].name!;
+                String image = controller.productModel[index].image!;
 
-              return GestureDetector(
-                  onTap: () {
-                    Get.to(() => ProductView(
-                          model: controller.productModel[index],
-                        ));
-                  },
-                  child: CustomSearchRowItem(
-                    category: category,
-                    text: name,
-                    image: image,
-                  ));
+                return GestureDetector(
+                    onTap: () {
+                      Get.to(() => ProductView(
+                            model: controller.productModel[index],
+                          ));
+                    },
+                    child: CustomSearchRowItem(
+                      topText: category,
+                      midText: name,
+                      image: image,
+                    ));
+              }
             }
             return SizedBox.shrink();
           },

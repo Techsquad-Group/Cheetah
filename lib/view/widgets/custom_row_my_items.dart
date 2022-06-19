@@ -1,5 +1,5 @@
 import 'package:cheeta/core/view_model/home_view_model.dart';
-import 'package:cheeta/view/my_items.dart';
+import 'package:cheeta/view/my_items_view.dart';
 import 'package:cheeta/view/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

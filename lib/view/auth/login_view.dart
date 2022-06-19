@@ -89,7 +89,7 @@ class LoginView extends GetWidget<AuthViewModel> {
                     }
                   },
                   text: "LOGIN",
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
                 SizedBox(
                   height: 20,

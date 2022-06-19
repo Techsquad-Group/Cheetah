@@ -35,6 +35,10 @@ class ControlView extends GetWidget<AuthViewModel> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.add),
             label: 'Add',
           ),

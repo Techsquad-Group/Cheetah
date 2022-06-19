@@ -19,4 +19,16 @@ class FireStoreUser {
     DocumentSnapshot documentSnapshot = await _userCollectionRef.doc(uid).get();
     return documentSnapshot;
   }
+
+  Future<void> deleteProfileFromFireStore(String userId) async {
+    await _userCollectionRef.doc(userId).delete();
+  }
+
+  Future<void> updateProfileFromFireStore(
+      String userId, String name, String number) async {
+    await _userCollectionRef.doc(userId).update({
+      'name': name,
+      'number': number,
+    });
+  }
 }

@@ -59,4 +59,17 @@ class HomeViewModel extends GetxController {
       update();
     });
   }
+
+  updateProduct(String productId, String date, String name, String price,
+      String des) async {
+    loading.value = true;
+    await HomeServices()
+        .updateProductFromFireStore(productId, date, name, price, des)
+        .then((value) {
+      _productModel.clear();
+      getProduct();
+      _loading.value = false;
+      update();
+    });
+  }
 }

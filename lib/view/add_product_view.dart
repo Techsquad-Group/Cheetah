@@ -1,5 +1,4 @@
 // ignore_for_file: unused_local_variable
-
 import 'package:cheeta/core/view_model/control_view_model.dart';
 import 'package:cheeta/core/view_model/home_view_model.dart';
 import 'package:cheeta/core/view_model/product_view_model.dart';
@@ -8,6 +7,7 @@ import 'package:cheeta/model/user_model.dart';
 import 'package:cheeta/view/control_view.dart';
 import 'package:cheeta/view/home_view.dart';
 import 'package:cheeta/view/product_view.dart';
+import 'package:cheeta/view/widgets/custom_buttom.dart';
 import 'package:cheeta/view/widgets/custom_row_item.dart';
 import 'package:cheeta/view/widgets/custom_text.dart';
 import 'package:cheeta/view/widgets/custom_text_form_field.dart';
@@ -51,84 +51,106 @@ class AddProductView extends GetWidget<ProductViewModel> {
       body: SingleChildScrollView(
           child: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            CustomTextFormField(
-              text: "Category",
-              hintText: "Enter your category",
-              onSave: (value) {
-                controller.category = value!;
-              },
-              validator: 'Please enter some text',
-            ),
-            CustomTextFormField(
-              text: "City",
-              hintText: "Enter your city",
-              onSave: (value) {
-                controller.city = value!;
-              },
-              validator: 'Please enter some text',
-            ),
-            CustomTextFormField(
-              text: "Location",
-              hintText: "Enter your location",
-              onSave: (value) {
-                controller.location = value!;
-              },
-              validator: 'Please enter some text',
-            ),
-            CustomTextFormField(
-              text: "Price",
-              hintText: "Enter your price",
-              onSave: (value) {
-                controller.price = value!;
-              },
-              validator: 'Please enter some text',
-            ),
-            CustomTextFormField(
-              text: "Product Name",
-              hintText: "Enter your product name",
-              onSave: (value) {
-                controller.name = value!;
-              },
-              validator: 'Please enter some text',
-            ),
-            CustomTextFormField(
-              text: "Product Description",
-              hintText: "Enter your product description",
-              onSave: (value) {
-                controller.description = value!;
-              },
-              validator: 'Please enter some text',
-            ),
-            GetBuilder<ProfileViewModel>(
-              init: ProfileViewModel(),
-              builder: (controller) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    _formKey.currentState?.save();
-                    if (_formKey.currentState!.validate()) {
-                      addUserDateToProduct(
-                        controller.userModel.name!,
-                        controller.userModel.userId!,
-                        controller.userModel.pic == null
-                            ? ""
-                            : controller.userModel.pic ?? '',
-                        controller.userModel.number == null
-                            ? ""
-                            : controller.userModel.number ?? '',
-                      );
-                      addProduct();
-                    }
-                  },
-                  child: const Text('Add Product'),
-                  //color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              CustomTextFormField(
+                text: "Category",
+                hintText: "Enter your category",
+                onSave: (value) {
+                  controller.category = value!;
+                },
+                validator: 'Please enter some text',
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              CustomTextFormField(
+                text: "City",
+                hintText: "Enter your city",
+                onSave: (value) {
+                  controller.city = value!;
+                },
+                validator: 'Please enter some text',
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              CustomTextFormField(
+                text: "Location",
+                hintText: "Enter your location",
+                onSave: (value) {
+                  controller.location = value!;
+                },
+                validator: 'Please enter some text',
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              CustomTextFormField(
+                text: "Price",
+                hintText: "Enter your price",
+                onSave: (value) {
+                  controller.price = value!;
+                },
+                validator: 'Please enter some text',
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              CustomTextFormField(
+                text: "Product Name",
+                hintText: "Enter your product name",
+                onSave: (value) {
+                  controller.name = value!;
+                },
+                validator: 'Please enter some text',
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              CustomTextFormField(
+                text: "Product Description",
+                hintText: "Enter your product description",
+                onSave: (value) {
+                  controller.description = value!;
+                },
+                validator: 'Please enter some text',
+              ),
+              Center(
+                child: GetBuilder<ProfileViewModel>(
+                  init: ProfileViewModel(),
+                  builder: (controller) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 100, left: 100),
+                      child: CustomButton(
+                        onPress: () {
+                          _formKey.currentState?.save();
+                          if (_formKey.currentState!.validate()) {
+                            addUserDateToProduct(
+                              controller.userModel.name!,
+                              controller.userModel.userId!,
+                              controller.userModel.pic == null
+                                  ? ""
+                                  : controller.userModel.pic ?? '',
+                              controller.userModel.number == null
+                                  ? ""
+                                  : controller.userModel.number ?? '',
+                            );
+                            addProduct();
+                          }
+                        },
+                        text: 'Add Product',
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       )),
     );
