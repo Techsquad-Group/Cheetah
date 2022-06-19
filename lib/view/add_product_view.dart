@@ -32,9 +32,9 @@ class AddProductView extends GetWidget<ProductViewModel> {
 
   void addProduct() {
     controller.saveProduct();
-    // Get.to(() => ProductView(
-    //       model: controller.productModel,
-    //     ));
+    Get.to(() => ProductView(
+          model: controller.productModel,
+        ));
   }
 
   @override
