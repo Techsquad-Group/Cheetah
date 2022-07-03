@@ -1,13 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String? userId, pic, number, email, name, registeredWith;
 
-  UserModel(
-      {this.userId,
-      this.email,
-      this.name,
-      this.pic,
-      this.number,
-      this.registeredWith});
+  UserModel({
+    this.userId,
+    this.email,
+    this.name,
+    this.pic,
+    this.number,
+    this.registeredWith,
+  });
 
   UserModel.fromJson(Map<dynamic, dynamic> map) {
     if (map == null) {

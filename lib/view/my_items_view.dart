@@ -19,8 +19,8 @@ import '../core/view_model/profile_view_model.dart';
 import 'my_product_view.dart';
 
 class MyItems extends StatelessWidget {
-  String sellerId;
-  MyItems({required this.sellerId});
+  String user;
+  MyItems({required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class MyItems extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: controller.productModel.length,
                 itemBuilder: (context, index) {
-                  if (controller.productModel[index].sellerId == sellerId) {
+                  if (controller.productModel[index].sellerId == user) {
                     String name = controller.productModel[index].name!;
                     String image = controller.productModel[index].image!;
                     String price = controller.productModel[index].price!;
@@ -65,7 +65,7 @@ class MyItems extends StatelessWidget {
                           price: price,
                           date: date,
                           productId: productId,
-                          sellerId: sellerId,
+                          sellerId: user,
                         ));
                   }
                   return SizedBox.shrink();

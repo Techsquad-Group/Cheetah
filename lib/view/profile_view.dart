@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:cheeta/view/auth/login_view.dart';
+import 'package:cheeta/view/favorite_view.dart';
 import 'package:cheeta/view/product_view.dart';
 import 'package:cheeta/view/widgets/custom_profile_tiles.dart';
 import 'package:cheeta/view/widgets/custom_text.dart';
@@ -87,7 +88,7 @@ class ProfileView extends StatelessWidget {
                       image: 'assets/images/editProfile.png',
                       onPress: () {
                         Get.to(() => EditProfile(
-                              sellerId: controller.userModel.userId ?? '',
+                              user: controller.userModel.userId ?? '',
                             ));
                       },
                     ),
@@ -99,7 +100,7 @@ class ProfileView extends StatelessWidget {
                       image: 'assets/images/myItems.png',
                       onPress: () {
                         Get.to(() => MyItems(
-                              sellerId: controller.userModel.userId ?? '',
+                              user: controller.userModel.userId ?? '',
                             ));
                       },
                     ),
@@ -109,7 +110,11 @@ class ProfileView extends StatelessWidget {
                     CustomProfileTiles(
                       text: "Favorite",
                       image: 'assets/images/favorite.png',
-                      onPress: () {},
+                      onPress: () {
+                        Get.to(() => FavoriteView(
+                              user: controller.userModel.userId ?? '',
+                            ));
+                      },
                     ),
                     SizedBox(
                       height: 20,

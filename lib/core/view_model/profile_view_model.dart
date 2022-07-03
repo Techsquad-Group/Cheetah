@@ -44,9 +44,9 @@ class ProfileViewModel extends GetxController {
     update();
   }
 
-  deleteProfile(String productId) async {
+  deleteProfile(String userId) async {
     loading.value = true;
-    await FireStoreUser().deleteProfileFromFireStore(productId).then((value) {
+    await FireStoreUser().deleteProfileFromFireStore(userId).then((value) {
       Get.offAll(() => ControlView());
       _loading.value = false;
       update();

@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../view/add_product_view.dart';
+import '../../view/chat_view.dart';
 import '../../view/home_view.dart';
 import '../../view/profile_view.dart';
 import '../../view/search_people.dart';
@@ -34,6 +35,11 @@ class ControlViewModel extends GetxController {
           break;
         }
       case 3:
+        {
+          _currentScreen = ChatView();
+          break;
+        }
+      case 4:
         {
           _currentScreen = ProfileView();
           break;

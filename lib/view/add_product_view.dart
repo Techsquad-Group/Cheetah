@@ -133,8 +133,8 @@ class AddProductView extends GetWidget<ProductViewModel> {
                             _formKey.currentState?.save();
                             if (_formKey.currentState!.validate()) {
                               addUserDateToProduct(
-                                controller.userModel.name!,
-                                controller.userModel.userId!,
+                                controller.userModel.name ?? '',
+                                controller.userModel.userId ?? '',
                                 controller.userModel.pic == null
                                     ? ""
                                     : controller.userModel.pic ?? '',

@@ -54,7 +54,7 @@ class MyProductView extends StatelessWidget {
           leading: GestureDetector(
               onTap: () {
                 Get.off(() => MyItems(
-                      sellerId: sellerId,
+                      user: sellerId,
                     ));
               },
               child: Icon(Icons.arrow_back, color: primaryColor)),
@@ -260,8 +260,7 @@ class MyProductView extends StatelessWidget {
                                                                 desController
                                                                     .text);
                                                         Get.off(() => MyItems(
-                                                              sellerId:
-                                                                  sellerId,
+                                                              user: sellerId,
                                                             ));
                                                       },
                                                       text: "Update Info",
@@ -285,7 +284,7 @@ class MyProductView extends StatelessWidget {
                                 onPress: () {
                                   controller.deleteProduct(productId);
                                   Get.off(() => MyItems(
-                                        sellerId: sellerId,
+                                        user: sellerId,
                                       ));
                                 },
                                 text: "Delete",

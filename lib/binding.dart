@@ -1,3 +1,4 @@
+import 'package:cheeta/core/view_model/favorite_view_model.dart';
 import 'package:cheeta/local_storage_data.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,8 @@ class Binding extends Bindings {
     Get.lazyPut<ControlViewModel>(() => ControlViewModel());
     Get.lazyPut<HomeViewModel>(() => HomeViewModel());
     Get.lazyPut<ProductViewModel>(() => ProductViewModel());
+    Get.lazyPut<ProfileViewModel>(() => ProfileViewModel());
+    Get.lazyPut<FavoriteViewModel>(() => FavoriteViewModel());
     Get.lazyPut<LocalStorageData>(() => LocalStorageData());
   }
 }

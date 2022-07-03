@@ -41,33 +41,38 @@ class ProductViewModel extends GetxController {
   }
 
   void saveProduct() async {
-    uploadFile();
-    _productModel = ProductModel(
-      name: name,
-      image: image,
-      price: price,
-      city: city,
-      location: location,
-      description: description,
-      date: date,
-      seller: seller,
-      sellerId: sellerId,
-      sellerImg: sellerImg,
-      sellerNum: sellerNum,
-      category: category,
-      productId: productId,
-    );
-    await FireStoreProduct().addProductToFireStore(productModel).then((value) {
-      value.update({
-        'productId': value.id,
+    uploadFile().then((value) async {
+      _productModel = ProductModel(
+        name: name,
+        image: image,
+        price: price,
+        city: city,
+        location: location,
+        description: description,
+        date: date,
+        seller: seller,
+        sellerId: sellerId,
+        sellerImg: sellerImg,
+        sellerNum: sellerNum,
+        category: category,
+        productId: productId,
+      );
+      await FireStoreProduct()
+          .addProductToFireStore(productModel)
+          .then((value) {
+        value.update({
+          'productId': value.id,
+          'image': image,
+        });
       });
     });
+
     update();
   }
 
   Future selectImage() async {
     final result = await FilePicker.platform.pickFiles();
-    _pickedFile = result!.files.first;
+    _pickedFile = result?.files.first;
     update();
   }
 
@@ -81,6 +86,5 @@ class ProductViewModel extends GetxController {
     final snapshot = await uploadTask.whenComplete(() {});
 
     image = await snapshot.ref.getDownloadURL();
-    print(image);
   }
 }

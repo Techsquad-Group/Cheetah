@@ -25,19 +25,19 @@ class PeopleViewModel extends GetxController {
 
   getPeople() async {
     _loading.value = true;
-    FireStorePeople().getPeople().then((value) {
+    await FireStorePeople().getPeople().then((value) {
       for (int i = 0; i < value.length; i++) {
         _userModel
             .add(UserModel.fromJson(value[i].data() as Map<dynamic, dynamic>));
-        _loading.value = false;
       }
+      _loading.value = false;
       update();
     });
   }
 
   getSpecificUser(String sellerId) async {
     _loading.value = true;
-    FireStorePeople().getSpecificUser(sellerId).then((value) {
+    await FireStorePeople().getSpecificUser(sellerId).then((value) async {
       _singleUserModel =
           UserModel.fromJson(value.data() as Map<dynamic, dynamic>);
       _loading.value = false;

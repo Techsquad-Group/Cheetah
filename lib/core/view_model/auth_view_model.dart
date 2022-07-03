@@ -1,6 +1,8 @@
 // ignore_for_file: unnecessary_overrides, override_on_non_overriding_member, unused_field, prefer_final_fields, unused_local_variable, avoid_print
 
+import 'package:cheeta/core/services/firestore_chat.dart';
 import 'package:cheeta/local_storage_data.dart';
+import 'package:cheeta/model/chat_model.dart';
 import 'package:cheeta/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +12,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cheeta/view/auth/login_view.dart';
 
 import '../../view/control_view.dart';
+import '../services/firestore_people.dart';
 import '../services/firestore_user.dart';
 
 class AuthViewModel extends GetxController {
@@ -20,6 +23,12 @@ class AuthViewModel extends GetxController {
 
   Rxn<User> _user = Rxn<User>();
   String? get user => _user.value?.email;
+
+  List<UserModel> _userModel = [];
+  List<UserModel> get userModel => _userModel;
+
+  List<ChatModel> _chatModel = [];
+  List<ChatModel> get chatModel => _chatModel;
 
   final LocalStorageData localStorageData = Get.find();
 
@@ -104,7 +113,54 @@ class AuthViewModel extends GetxController {
       registeredWith: registeredWith,
     );
     await FireStoreUser().addUserToFireStore(userModel);
+
+    await FireStorePeople().getPeople().then((value) {
+      _userModel.clear();
+      for (int i = 0; i < value.length; i++) {
+        _userModel
+            .add(UserModel.fromJson(value[i].data() as Map<dynamic, dynamic>));
+      }
+    });
+
+    await FireStoreChat().getChats().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        _chatModel
+            .add(ChatModel.fromJson(value[i].data() as Map<dynamic, dynamic>));
+      }
+    });
+
+    update();
     setUser(userModel);
+
+    String userModelUserId = '';
+    bool isExict = false;
+    String theID = '';
+
+    for (var i = 0; i < _userModel.length; i++) {
+      if (_userModel[i].userId != user.user!.uid) {
+        List<String> ids = [_userModel[i].userId.toString(), user.user!.uid];
+        ids.sort();
+        theID = ids[0].substring(0, 10) + ids[1].substring(10);
+        userModelUserId = _userModel[i].userId as String;
+
+        for (var j = 0; j < _chatModel.length; j++) {
+          if (theID == _chatModel[j].chatID) {
+            isExict = true;
+            break;
+          }
+        }
+      }
+    }
+
+    if (!isExict) {
+      ChatModel chatModel = ChatModel(
+        user1: user.user!.uid,
+        user2: userModelUserId,
+        chatID: theID,
+      );
+      await FireStoreChat().addChatToFireStore(chatModel);
+    }
+    update();
   }
 
   void getCurrentUserData(String uid) async {

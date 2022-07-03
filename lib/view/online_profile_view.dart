@@ -12,6 +12,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import '../core/view_model/home_view_model.dart';
+import '../core/view_model/people_view_model.dart';
 import '../core/view_model/profile_view_model.dart';
 import 'edit_profile_view.dart';
 import 'my_items_view.dart';
@@ -23,8 +24,8 @@ class OnlineProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ProfileViewModel>(
-      init: ProfileViewModel(),
+    return GetBuilder<PeopleViewModel>(
+      init: PeopleViewModel(),
       builder: (controller) => controller.loading.value
           ? Center(
               child: CircularProgressIndicator(),

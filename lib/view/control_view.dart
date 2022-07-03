@@ -43,6 +43,10 @@ class ControlView extends GetWidget<AuthViewModel> {
             label: 'Add',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Chat',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             label: 'Account',
           ),

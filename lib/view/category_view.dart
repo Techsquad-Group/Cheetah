@@ -4,6 +4,7 @@ import 'package:cheeta/core/view_model/control_view_model.dart';
 import 'package:cheeta/view/add_product_view.dart';
 import 'package:cheeta/view/auth/login_view.dart';
 import 'package:cheeta/view/product_view.dart';
+import 'package:cheeta/view/widgets/custom_buttom.dart';
 import 'package:cheeta/view/widgets/custom_card.dart';
 import 'package:cheeta/view/widgets/custom_row_item.dart';
 import 'package:cheeta/view/widgets/custom_text.dart';
@@ -20,60 +21,90 @@ import '../../core/view_model/home_view_model.dart';
 import '../model/category_model.dart';
 import '../model/product_model.dart';
 
-class CategoryView extends StatelessWidget {
+class CategoryView extends StatefulWidget {
   CategoryModel model;
 
   CategoryView({required this.model});
+
+  @override
+  State<CategoryView> createState() => _CategoryViewState();
+}
+
+class _CategoryViewState extends State<CategoryView> {
+  bool isLatest = false;
+
   @override
   Widget build(BuildContext context) {
     var _controller = TextEditingController();
     return GetBuilder<HomeViewModel>(
-        init: HomeViewModel(),
-        builder: (controller) => controller.loading.value
-            ? Center(child: CircularProgressIndicator())
-            : Scaffold(
-                appBar: AppBar(
-                  //title: const Text('Welcome', style: TextStyle(color: Colors.black)),
-                  backgroundColor: Colors.transparent,
-                  bottomOpacity: 0.0,
-                  elevation: 0.0,
-                  toolbarHeight: 80,
-                  //SearchBar
-                  title: Container(
-                    width: double.infinity,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Center(
-                      child: TextField(
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.clear),
-                            onPressed: () {
-                              _controller.clear();
-                            },
-                          ),
-                          hintText: 'Search',
-                          border: InputBorder.none,
+      init: HomeViewModel(),
+      builder: (controller) => controller.loading.value
+          ? Center(child: CircularProgressIndicator())
+          : Scaffold(
+              appBar: AppBar(
+                //title: const Text('Welcome', style: TextStyle(color: Colors.black)),
+                backgroundColor: Colors.transparent,
+                bottomOpacity: 0.0,
+                elevation: 0.0,
+                toolbarHeight: 80,
+                //SearchBar
+                title: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Center(
+                    child: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            _controller.clear();
+                          },
                         ),
-                        onSubmitted: (value) {
-                          showSearch(
-                            query: value,
-                            context: context,
-                            delegate: MySearch(model.name),
-                          );
-                        },
+                        hintText: 'Search',
+                        border: InputBorder.none,
                       ),
+                      onSubmitted: (value) {
+                        showSearch(
+                          query: value,
+                          context: context,
+                          delegate: MySearch(widget.model.name),
+                        );
+                      },
                     ),
                   ),
                 ),
-                //Categories
-                body: _listViewProducts()
-                //bottom navigation bar
-                ));
+              ),
+              //Categories
+              body: Column(
+                children: [
+                  Row(
+                    children: [
+                      TextButton.icon(
+                        icon: RotatedBox(
+                          quarterTurns: 1,
+                          child: Icon(Icons.compare_arrows,
+                              size: 28, color: Colors.black),
+                        ),
+                        label: Text(
+                          isLatest ? 'By Low Price' : 'By Latest',
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        ),
+                        onPressed: () => setState(() => isLatest = !isLatest),
+                      ),
+                    ],
+                  ),
+                  Expanded(child: _listViewProducts()),
+                  //Expanded(child: _listViewProductsByPrice()),
+                ],
+              ),
+              //bottom navigation bar
+            ),
+    );
   }
 
   Widget _listViewProducts() {
@@ -84,6 +115,11 @@ class CategoryView extends StatelessWidget {
           shrinkWrap: true,
           itemCount: controller.productModel.length,
           itemBuilder: (context, index) {
+            isLatest
+                ? controller.productModel.sort(
+                    (a, b) => a.price.toString().compareTo(b.price.toString()))
+                : controller.productModel.sort(
+                    (a, b) => b.date.toString().compareTo(a.date.toString()));
             String name = controller.productModel[index].name!;
             String image = controller.productModel[index].image!;
             String price = controller.productModel[index].price!;
@@ -99,8 +135,8 @@ class CategoryView extends StatelessWidget {
             }
 
             if (controller.productModel[index].category!.toLowerCase() ==
-                    model.name!.toLowerCase() ||
-                !isExict && model.name == "Others") {
+                    widget.model.name!.toLowerCase() ||
+                !isExict && widget.model.name == "Others") {
               return GestureDetector(
                   onTap: () {
                     Get.to(() => ProductView(
@@ -163,7 +199,8 @@ class MySearch extends SearchDelegate {
           shrinkWrap: true,
           itemCount: controller.productModel.length,
           itemBuilder: (context, index) {
-            if (controller.productModel[index].category == modelName) {
+            if (controller.productModel[index].category!.toLowerCase() ==
+                modelName!.toLowerCase()) {
               if (controller.productModel[index].name!
                       .toLowerCase()
                       .contains(query.toLowerCase()) ||

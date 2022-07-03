@@ -20,10 +20,10 @@ import '../core/view_model/profile_view_model.dart';
 import '../model/product_model.dart';
 
 class EditProfile extends StatelessWidget {
-  String sellerId;
+  String user;
 
   EditProfile({
-    required this.sellerId,
+    required this.user,
   });
 
   TextEditingController nameController = TextEditingController();
@@ -169,14 +169,13 @@ class EditProfile extends StatelessWidget {
                                                             'normal') {
                                                           controller
                                                               .updateProfile(
-                                                            sellerId,
+                                                            user,
                                                             nameController.text,
                                                             numberController
                                                                 .text,
                                                           );
                                                           Get.off(() => MyItems(
-                                                                sellerId:
-                                                                    sellerId,
+                                                                user: user,
                                                               ));
                                                         } else {
                                                           Get.snackbar(
@@ -208,9 +207,9 @@ class EditProfile extends StatelessWidget {
                               width: 150,
                               child: CustomButton(
                                 onPress: () {
-                                  controller.deleteProfile(sellerId);
+                                  controller.deleteProfile(user);
                                   Get.off(() => MyItems(
-                                        sellerId: sellerId,
+                                        user: user,
                                       ));
                                 },
                                 text: "Delete",
