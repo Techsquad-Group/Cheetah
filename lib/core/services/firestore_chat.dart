@@ -10,14 +10,12 @@ class FireStoreChat {
   final CollectionReference _chatCollectionRef =
       FirebaseFirestore.instance.collection('Chats');
 
-  Future<DocumentReference<Object?>> addChatToFireStore(
-      ChatModel chatModel) async {
+  void addChatToFireStore(ChatModel chatModel) async {
     List<String> ids = [chatModel.user1.toString(), chatModel.user2.toString()];
     ids.sort();
     String theID = ids[0].substring(0, 10) + ids[1].substring(10);
 
-    return await _chatCollectionRef.doc(theID).set(chatModel.toJson())
-        as Future<DocumentReference<Object?>>;
+    await _chatCollectionRef.doc(theID).set(chatModel.toJson());
   }
 
   Future<List<QueryDocumentSnapshot>> getChats() async {

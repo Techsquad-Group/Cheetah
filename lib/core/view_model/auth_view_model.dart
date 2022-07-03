@@ -131,35 +131,34 @@ class AuthViewModel extends GetxController {
 
     update();
     setUser(userModel);
-
-    String userModelUserId = '';
-    bool isExict = false;
-    String theID = '';
-
+    print(_userModel.length.toString());
     for (var i = 0; i < _userModel.length; i++) {
+      print(i);
+      bool isExict = false;
+      String theID = '';
       if (_userModel[i].userId != user.user!.uid) {
         List<String> ids = [_userModel[i].userId.toString(), user.user!.uid];
         ids.sort();
         theID = ids[0].substring(0, 10) + ids[1].substring(10);
-        userModelUserId = _userModel[i].userId as String;
 
         for (var j = 0; j < _chatModel.length; j++) {
           if (theID == _chatModel[j].chatID) {
             isExict = true;
-            break;
           }
+        }
+
+        print(isExict);
+        if (!isExict) {
+          ChatModel chatModel = ChatModel(
+            user1: user.user!.uid,
+            user2: _userModel[i].userId,
+            chatID: theID,
+          );
+          FireStoreChat().addChatToFireStore(chatModel);
         }
       }
     }
 
-    if (!isExict) {
-      ChatModel chatModel = ChatModel(
-        user1: user.user!.uid,
-        user2: userModelUserId,
-        chatID: theID,
-      );
-      await FireStoreChat().addChatToFireStore(chatModel);
-    }
     update();
   }
 
